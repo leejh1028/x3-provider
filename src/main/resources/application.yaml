@@ -21,6 +21,10 @@ spring:
     redis:
       host: 34.92.133.206
       port: 6379
+  cache:
+    type: redis
+    redis:
+      time-to-live: 3600000
 
 mybatis-plus:
   global-config:
@@ -29,6 +33,7 @@ mybatis-plus:
   mapper-locations: classpath:/mapper/*Mapper.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
 
 
 # springdoc-openapi项目配置

@@ -1,13 +1,9 @@
 package org.nyzz.x3.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -30,7 +26,7 @@ public class Messages {
 
     @TableField(value = "sender")
     @Schema(description="")
-    private Object sender;
+    private Sender sender;
 
     @TableField(value = "message")
     @Schema(description="")
@@ -40,8 +36,21 @@ public class Messages {
     @Schema(description="")
     private LocalDateTime timestamp = LocalDateTime.now();
 
+    @Getter
     public enum Sender {
-        USER,
-        BOT
+
+        USER("user", 1), BOT("bot", 2);
+
+        @EnumValue
+        private final String name;
+
+        @JsonValue
+        private final Integer num;
+
+        Sender(String name, Integer num) {
+            this.name = name;
+            this.num = num;
+        }
     }
+
 }

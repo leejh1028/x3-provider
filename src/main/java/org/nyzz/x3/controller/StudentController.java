@@ -1,10 +1,12 @@
 package org.nyzz.x3.controller;
 
+import com.alibaba.fastjson.JSON;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.nyzz.x3.entity.Student;
 import org.nyzz.x3.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +22,8 @@ public class StudentController {
     @GetMapping("/list")
     @Operation(summary = "获取用户列表")
     public List<Student> list() {
-        return studentService.list();
+        List<Student> students = studentService.list().stream().limit(10).toList();
+        return students;
     }
 
     @PostMapping("/add")

@@ -5,17 +5,20 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 @Schema
 @Data
 @Builder
-@AllArgsConstructor(staticName = "of")
+@AllArgsConstructor
 @TableName(value = "student")
-public class Student {
+public class Student implements Serializable {
 
     @TableId(value = "id", type = IdType.AUTO)
     @Schema(description="主键")
