@@ -1,0 +1,50 @@
+spring:
+  datasource:
+    dynamic:
+      primary: master #设置默认的数据源或者数据源组,默认值即为master
+      strict: false #严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
+      grace-destroy: false #是否优雅关闭数据源，默认为false，设置为true时，关闭数据源时如果数据源中还存在活跃连接，至多等待10s后强制关闭
+      datasource:
+        master:
+          url: jdbc:mysql://localhost:3306/mysql_study?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
+          username: root
+          password: root
+          driver-class-name: com.mysql.cj.jdbc.Driver # 3.2.0开始支持SPI可省略此配置
+        slave_1:
+          url: jdbc:mysql://localhost:3306/chatbot?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
+          username: root
+          password: root
+          driver-class-name: com.mysql.cj.jdbc.Driver
+        #......省略
+        #以上会配置一个默认库master，一个组slave下有两个子库slave_1,slave_2
+  data:
+    redis:
+      host: 34.92.133.206
+      port: 6379
+
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto # 全局id类型为自增长
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+# springdoc-openapi项目配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: org.nyzz.x3.controller
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.nyzz.x3.mapper.StudentMapper">
+  <resultMap id="BaseResultMap" type="org.nyzz.x3.entity.Student">
+    <!--@mbg.generated-->
+    <!--@Table student-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="CDATE" jdbcType="TIMESTAMP" property="cdate" />
+    <result column="INPUT_DATE" jdbcType="TIMESTAMP" property="inputDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, `name`, age, CDATE, INPUT_DATE
+  </sql>
+</mapper>
