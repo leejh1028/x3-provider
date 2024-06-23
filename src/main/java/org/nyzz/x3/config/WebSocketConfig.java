@@ -1,6 +1,7 @@
 package org.nyzz.x3.config;
 
 import org.nyzz.x3.handler.ChatWebSocketHandler;
+import org.nyzz.x3.interceptor.HttpSessionInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
@@ -18,6 +19,8 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(chatWebSocketHandler, "/chat").setAllowedOrigins("*");
+        registry.addHandler(chatWebSocketHandler, "/chat")
+                .addInterceptors(new HttpSessionInterceptor())
+                .setAllowedOrigins("*");
     }
 }

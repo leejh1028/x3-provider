@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,5 +42,11 @@ public class Student implements Serializable {
     @TableField(value = "INPUT_DATE")
     @Schema(description="入库时间")
     private Date inputDate;
+
+    @JsonCreator
+    public Student(@JsonProperty("name") String name, @JsonProperty("age") int age) {
+        this.name = name;
+        this.age = age;
+    }
 
 }

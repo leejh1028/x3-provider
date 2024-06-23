@@ -6,7 +6,7 @@
     <!--@Table messages-->
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="sender" jdbcType="OTHER" property="sender" />
+    <result column="sender" jdbcType="OTHER" property="senderEnum" />
     <result column="message" jdbcType="LONGVARCHAR" property="message" />
     <result column="timestamp" jdbcType="TIMESTAMP" property="timestamp" />
   </resultMap>

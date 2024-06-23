@@ -7,31 +7,42 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Component
 @Slf4j
 public class ChatWebSocketHandler extends TextWebSocketHandler {
 
-    private final List<WebSocketSession> sessions = new ArrayList<>();
+    private static final Set<WebSocketSession> onLinesSessions = Collections.synchronizedSet(new HashSet<>());
 
     @Override
-    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        log.error("afterConnectionEstablished");
-        sessions.add(session);
+    public void afterConnectionEstablished(WebSocketSession session) {
+        log.info("afterConnectionEstablished，ID：{}--{}", session.getId(), session.getAttributes().get("name"));
+        onLinesSessions.add(session);
     }
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        for (WebSocketSession s : sessions) {
-            s.sendMessage(message);
-        }
+        log.info("收到来自【 {} 】的消息：{}", session.getId(), message.getPayload());
+//        for (WebSocketSession s : onLinesSessions) {
+//            s.sendMessage(message);
+//        }
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         log.error("afterConnectionClosed");
-        sessions.remove(session);
+        onLinesSessions.remove(session);
     }
+
+    public static void broadcast(String message) throws Exception {
+        synchronized (onLinesSessions) {
+            for (WebSocketSession session : onLinesSessions) {
+                if (session.isOpen()) {
+                    session.sendMessage(new TextMessage(message));
+                }
+            }
+        }
+    }
+
 }
